@@ -1,0 +1,122 @@
+swagger: "2.0"
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /getCurrentRate:
+    get:
+      summary: GetCurrentExchangeRate
+      operationId: GetCurrentRate
+      description: "This api of Bank VTB  Rates"
+      parameters:
+        - in: query
+          name: conversionPlace
+          description: "Канал обмена: 0 - офис; 1 - интернет/мобильный банк; 2 - спецкасса"
+          required: true
+          type: integer
+          format: INT32
+        - in: query
+          name: conversionType
+          description: "Тип обмена: 0 - наличные; 1 - безналичные"
+          required: true
+          type: integer
+          format: INT32
+        - in: query
+          name: sourceCurrency
+          description: "Иностранные валюты: USD,EUR,CHF"
+          required: true
+          type: array
+          items:
+            type: string
+            format: varchar
+        - in: query
+          name: targetCurrency
+          description: "Базовая валюта: RUR"
+          required: true
+          type: string
+          format: varchar
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Api request is Good!!
+          schema:
+            $ref: "#/definitions/Rates"
+        "401":
+          description: Unauthorized
+        "404": 
+          description: Not Found
+        "405": 
+          description : Method Not Allowed
+        "406": 
+          description: Not Acceptable
+        "429":
+          description: Too Many Requests
+        "500": 
+          description: Internal Server Error
+        "503":
+          description: Service Unavailable
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+definitions:
+  Rates:
+    properties:
+      exchangeType:
+        type: string
+        example: null
+      currencyToUnit:
+        type: number
+        example: null
+      scaleCurrency:
+        type: boolean
+        example: 0
+      direction:
+        type: string
+        example: null
+      dateTime:
+        type: string
+        format: date-time
+      rates:
+        type: array
+        items:
+          $ref: "#/definitions/Ratesparam"
+  Ratesparam:
+    properties:
+      banksell:
+        type: number
+        example: 67.5
+      bankbuy:
+        type: number
+        example: 66.76
+      ammountMin:
+        type: number
+        example: 1
+      ammountMax:
+        type: number
+        example: null
+      updatedDateTime:
+        type: string
+        format: date-time
+        example: "2020-01-23T10:45:00"
+      targetCurrency:
+        $ref: "#/definitions/Currency"
+      sourceCurrency:
+        $ref: "#/definitions/Currency"
+  Currency:
+    properties:
+      symbol:
+        type: string
+        example: $
+      name:
+        type: string
+        example: Доллар США
+      code:
+        type: string
+        example: USD
+        
+info:
+  description: " SwaggerRates of list currency www.vtb.ru"
+  title: Rates
+  version: v1
