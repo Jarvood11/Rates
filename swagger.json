@@ -1,0 +1,125 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "v1",
+    "title" : "atms"
+  },
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "Secured Admin-only calls"
+  }, {
+    "name" : "developers",
+    "description" : "Operations available to regular developers"
+  } ],
+  "paths" : {
+    "/atms" : {
+      "get" : {
+        "summary" : "searches inventory",
+        "description" : "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
+        "operationId" : "searchInventory",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "$ref" : "#/definitions/atms"
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        },
+        "x-auth-type" : "Application & Application User",
+        "x-throttling-tier" : "Unlimited"
+      }
+    }
+  },
+  "definitions" : {
+    "atms" : {
+      "properties" : {
+        "atmID" : {
+          "type" : "number",
+          "example" : 5196.0
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "ВТБ, банкомат"
+        },
+        "country" : {
+          "type" : "string",
+          "example" : "Россия"
+        },
+        "townName" : {
+          "type" : "string",
+          "example" : "Москва,"
+        },
+        "address" : {
+          "type" : "string",
+          "example" : "Москва,"
+        },
+        "address-add" : {
+          "type" : "string",
+          "example" : "ст. м. Бульвар Дмитрия Донского"
+        },
+        "working-time" : {
+          "type" : "string",
+          "example" : "пн.-вс.: 05.30-00.30"
+        },
+        "GeographicCoordinates" : {
+          "$ref" : "#/definitions/atms_GeographicCoordinates"
+        },
+        "actualization-date" : {
+          "type" : "string",
+          "format" : "datatime",
+          "example" : "2020-01-29 21:40:00"
+        },
+        "Availability" : {
+          "$ref" : "#/definitions/atms_Availability"
+        },
+        "currencies" : {
+          "type" : "string",
+          "example" : "RUR"
+        },
+        "services" : {
+          "type" : "string",
+          "example" : " "
+        }
+      }
+    },
+    "atms_GeographicCoordinates" : {
+      "type" : "object",
+      "properties" : {
+        "latitude" : {
+          "type" : "string",
+          "example" : "55.568440"
+        },
+        "longitude" : {
+          "type" : "string",
+          "example" : "37.575863"
+        }
+      }
+    },
+    "atms_Availability" : {
+      "type" : "object",
+      "properties" : {
+        "acess24Hour" : {
+          "type" : "boolean",
+          "example" : false
+        },
+        "isRestricted" : {
+          "type" : "boolean",
+          "example" : false
+        },
+        "sameAsOrganization" : {
+          "type" : "boolean",
+          "example" : false
+        },
+        "description" : {
+          "type" : "string",
+          "example" : "пн.-вс.: 05.30-00.30"
+        }
+      }
+    }
+  }
+}
