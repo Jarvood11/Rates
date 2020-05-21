@@ -1,0 +1,113 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "offices"
+  },
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "Secured Admin-only calls"
+  }, {
+    "name" : "developers",
+    "description" : "Operations available to regular developers"
+  } ],
+  "paths" : {
+    "/offices" : {
+      "get" : {
+        "summary" : "searches inventory",
+        "description" : "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
+        "operationId" : "searchInventory",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "$ref" : "#/definitions/Officeresponse"
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        },
+        "x-auth-type" : "Application & Application User",
+        "x-throttling-tier" : "Unlimited"
+      }
+    }
+  },
+  "definitions" : {
+    "Officeresponse" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "C534C9FE-92EE-496B-9179-62F9949D40E6"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Банк ВТБ Операционный офис Каспийский"
+        },
+        "name-other" : {
+          "type" : "string",
+          "example" : "Банк ВТБ (ПАО)"
+        },
+        "country" : {
+          "type" : "string",
+          "example" : "Россия"
+        },
+        "address" : {
+          "type" : "string",
+          "example" : "368300, Республика Дагестан, г. Каспийск, микрорайон 8, д. 1"
+        },
+        "address-add" : {
+          "type" : "string"
+        },
+        "phones" : {
+          "$ref" : "#/definitions/Officeresponse_phones"
+        },
+        "working-time" : {
+          "type" : "string",
+          "example" : "пн.–пт.: 09.00–18.00"
+        },
+        "GeographicCoordinates" : {
+          "$ref" : "#/definitions/Officeresponse_GeographicCoordinates"
+        },
+        "actualization-date" : {
+          "type" : "string",
+          "format" : "datetime",
+          "example" : "2020-01-30 00:21:47"
+        },
+        "services" : {
+          "type" : "string",
+          "example" : "services_for_individuals"
+        }
+      }
+    },
+    "Officeresponse_phones" : {
+      "type" : "object",
+      "properties" : {
+        "number" : {
+          "type" : "string",
+          "format" : "phone",
+          "example" : "8 (800) 100-24-24"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "Физ. лица"
+        }
+      }
+    },
+    "Officeresponse_GeographicCoordinates" : {
+      "type" : "object",
+      "properties" : {
+        "latitude" : {
+          "type" : "string",
+          "example" : "42.897465"
+        },
+        "longitude" : {
+          "type" : "string",
+          "example" : "47.622226"
+        }
+      }
+    }
+  }
+}
